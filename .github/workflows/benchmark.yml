@@ -61,7 +61,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install maturin
-          rustup target add x86_64-unknown-linux-musl
           python -m pip install pytest pytest-xdist
           python -m pip install mypy
           python -m pip install black
@@ -75,7 +74,7 @@ jobs:
       - name: Build (non-windows)
         if: matrix.os != 'windows-latest'
         run: |
-          maturin develop --release -m wheel/Cargo.toml --features=openssl
+          maturin develop --release -m wheel/Cargo.toml
 
       - name: python mypy
         run: |
@@ -118,8 +117,8 @@ jobs:
   generator-benchmarks:
     name: Generator performance
     runs-on: benchmark
-    container:
-      image: chianetwork/ubuntu-22.04-builder:latest
+    env:
+      RUSTUP_TOOLCHAIN: 1.92.0
     strategy:
       fail-fast: false
       matrix:
@@ -149,11 +148,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install maturin colorama clvm_tools
-          rustup target add x86_64-unknown-linux-musl
 
       - name: Build
         run: |
-          maturin develop --release -m wheel/Cargo.toml --features=openssl
+          export PATH="$HOME/.cargo/bin:$PATH"
+          rustc --version
+          maturin develop --release -m wheel/Cargo.toml
 
       - name: test generators
         run: |
@@ -169,8 +169,6 @@ jobs:
   benchmarks:
     name: rust benchmarks
     runs-on: benchmark
-    container:
-      image: chianetwork/ubuntu-22.04-builder:latest
     strategy:
       fail-fast: false
 
