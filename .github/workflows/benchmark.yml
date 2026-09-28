@@ -151,6 +151,8 @@ jobs:
 
       - name: Build
         run: |
+          export PATH="$HOME/.cargo/bin:$PATH"
+          rustc --version
           maturin develop --release -m wheel/Cargo.toml
 
       - name: test generators
