@@ -118,8 +118,6 @@ jobs:
   generator-benchmarks:
     name: Generator performance
     runs-on: benchmark
-    container:
-      image: chianetwork/ubuntu-22.04-builder:latest
     strategy:
       fail-fast: false
       matrix:
@@ -169,8 +167,6 @@ jobs:
   benchmarks:
     name: rust benchmarks
     runs-on: benchmark
-    container:
-      image: chianetwork/ubuntu-22.04-builder:latest
     strategy:
       fail-fast: false
 
