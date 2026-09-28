@@ -117,6 +117,8 @@ jobs:
   generator-benchmarks:
     name: Generator performance
     runs-on: benchmark
+    env:
+      RUSTUP_TOOLCHAIN: 1.92.0
     strategy:
       fail-fast: false
       matrix:
